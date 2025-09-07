@@ -1,9 +1,34 @@
+/**
+ * @swagger
+ * /api/lists:
+ *   get:
+ *     summary: Get all lists
+ *     responses:
+ *       200:
+ *         description: List of lists
+ *   post:
+ *     summary: Create a new list
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               boardId:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: List created
+ */
 import express from 'express';
-import { getPostgresPool } from '../db.js';
+import { dBConfig, getPostgresPool } from '../db.js';
 import { v4 as uuidv4 } from 'uuid';
 
 const router = express.Router();
-const pool = getPostgresPool();
+const pool = getPostgresPool(dBConfig);
 
 // GET /api/lists?boardId=...
 router.get('/', async (req, res) => {

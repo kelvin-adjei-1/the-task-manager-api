@@ -1,11 +1,33 @@
+/**
+ * @swagger
+ * /api/auth/register:
+ *   post:
+ *     summary: Register a new user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: User created
+ */
 import express from 'express';
-import { getPostgresPool } from '../db.js';
+import { dBConfig, getPostgresPool } from '../db.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 
 const router = express.Router();
-const pool = getPostgresPool();
+const pool = getPostgresPool(dBConfig);
 const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret';
 
 // Register

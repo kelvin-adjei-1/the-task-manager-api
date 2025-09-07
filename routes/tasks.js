@@ -1,9 +1,34 @@
+/**
+ * @swagger
+ * /api/tasks:
+ *   get:
+ *     summary: Get all tasks
+ *     responses:
+ *       200:
+ *         description: List of tasks
+ *   post:
+ *     summary: Create a new task
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               listId:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Task created
+ */
 import express from 'express';
-import { getPostgresPool } from '../db.js';
+import { dBConfig, getPostgresPool } from '../db.js';
 import { v4 as uuidv4 } from 'uuid';
 
 const router = express.Router();
-const pool = getPostgresPool();
+const pool = getPostgresPool(dBConfig);
 
 
 // GET /api/tasks?boardId=...

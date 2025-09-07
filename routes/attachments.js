@@ -1,9 +1,48 @@
+/**
+ * @swagger
+ * /api/attachments:
+ *   get:
+ *     summary: Get attachments for a task
+ *     parameters:
+ *       - in: query
+ *         name: taskId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: List of attachments
+ *   post:
+ *     summary: Add an attachment (metadata only)
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               taskId:
+ *                 type: string
+ *               fileName:
+ *                 type: string
+ *               url:
+ *                 type: string
+ *               size:
+ *                 type: integer
+ *               mimeType:
+ *                 type: string
+ *               uploadedById:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Attachment created
+ */
 import express from 'express';
-import { getPostgresPool } from '../db.js';
+import { dBConfig, getPostgresPool } from '../db.js';
 import { v4 as uuidv4 } from 'uuid';
 
 const router = express.Router();
-const pool = getPostgresPool();
+const pool = getPostgresPool(dBConfig);
 
 // GET /api/attachments?taskId=...
 router.get('/', async (req, res) => {

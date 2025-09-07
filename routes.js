@@ -1,12 +1,12 @@
 import express from 'express';
-import { getPostgresPool } from './db.js';
+import { dBConfig, getPostgresPool } from './db.js';
 
 const router = express.Router();
 
 // Example: GET /api/tasks (from PostgreSQL)
 router.get('/', async (req, res) => {
   try {
-    const pool = getPostgresPool();
+    const pool = getPostgresPool(dBConfig);
     const result = await pool.query('SELECT * FROM tasks');
     res.json(result.rows);
   } catch (err) {
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   const { title, description, status } = req.body;
   try {
-    const pool = getPostgresPool();
+    const pool = getPostgresPool(dBConfig);
     const result = await pool.query(
       'INSERT INTO tasks (title, description, status) VALUES ($1, $2, $3) RETURNING *',
       [title, description, status]
