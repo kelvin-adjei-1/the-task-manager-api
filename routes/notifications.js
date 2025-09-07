@@ -1,8 +1,23 @@
+/**
+ * @swagger
+ * /api/notifications:
+ *   get:
+ *     summary: Get notifications for a user
+ *     parameters:
+ *       - in: query
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: List of notifications
+ */
 import express from 'express';
-import { getPostgresPool } from '../db.js';
+import { dBConfig, getPostgresPool } from '../db.js';
 
 const router = express.Router();
-const pool = getPostgresPool();
+const pool = getPostgresPool(dBConfig);
 
 // GET /api/notifications?userId=...
 router.get('/', async (req, res) => {

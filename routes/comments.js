@@ -1,9 +1,42 @@
+/**
+ * @swagger
+ * /api/comments:
+ *   get:
+ *     summary: Get comments for a task
+ *     parameters:
+ *       - in: query
+ *         name: taskId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: List of comments
+ *   post:
+ *     summary: Add a comment
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               taskId:
+ *                 type: string
+ *               text:
+ *                 type: string
+ *               userId:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Comment created
+ */
 import express from 'express';
-import { getPostgresPool } from '../db.js';
+import { dBConfig, getPostgresPool } from '../db.js';
 import { v4 as uuidv4 } from 'uuid';
 
 const router = express.Router();
-const pool = getPostgresPool();
+const pool = getPostgresPool(dBConfig);
 
 
 // GET /api/comments?taskId=...

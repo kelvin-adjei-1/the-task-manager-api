@@ -1,9 +1,32 @@
+/**
+ * @swagger
+ * /api/boards:
+ *   get:
+ *     summary: Get all boards
+ *     responses:
+ *       200:
+ *         description: List of boards
+ *   post:
+ *     summary: Create a new board
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Board created
+ */
 import express from 'express';
-import { getPostgresPool } from '../db.js';
+import { dBConfig, getPostgresPool } from '../db.js';
 import { v4 as uuidv4 } from 'uuid';
 
 const router = express.Router();
-const pool = getPostgresPool();
+const pool = getPostgresPool(dBConfig);
 
 // GET /api/boards?workspaceId=...
 router.get('/', async (req, res) => {
